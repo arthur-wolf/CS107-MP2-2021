@@ -6,7 +6,9 @@ import ch.epfl.cs107.play.math.Vector;
 
 public class Village extends SimpleArea {
     public void createArea(){
-        new SimpleGhost(new Vector(18, 7), "ghost.2");
+        SimpleGhost a = new SimpleGhost(new Vector(18, 7), "ghost.2");
+        registerActor(a);
+        setViewCandidate(a);
     }
 
     @Override
