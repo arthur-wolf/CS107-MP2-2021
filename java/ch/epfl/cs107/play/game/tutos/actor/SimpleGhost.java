@@ -15,23 +15,40 @@ public class SimpleGhost extends Entity {
 
     public SimpleGhost(Vector position, String spriteName){
         super(position);
-        new Sprite(spriteName , 1, 1.f, this);
-        new TextGraphics(Integer.toString((int)hp), 0.4f, Color.BLUE);
+        sprite = new Sprite(spriteName , 1, 1.f, this);
         this.hp = 10;
+        hpText = new TextGraphics(Integer.toString((int)hp), 0.4f, Color.BLUE);
         hpText.setParent(this);
-        this.hpText.setAnchor(new Vector(-0.3f, 0.1f));
+        hpText.setAnchor(new Vector(-0.3f, 0.1f));
+    }
+
+    public void moveUp(float delta){
+        setCurrentPosition(getPosition().add(0.f, delta));
+    }
+    public void moveDown(float delta){
+        setCurrentPosition(getPosition().add(0.f, -delta));
+    }
+    public void moveLeft(float delta){
+        setCurrentPosition(getPosition().add(-delta, 0.f));
+    }
+    public void moveRight(float delta){
+        setCurrentPosition(getPosition().add(delta, 0.f));
     }
 
     @Override
     public void draw(Canvas canvas) {
+        sprite.draw(canvas);
         hpText.draw(canvas);
     }
 
     @Override
     public void update(float deltaTime) {
-        if (hp > 0 && hp - deltaTime > 0){
+        if (hp > 0) {
             hp -= deltaTime;
             hpText.setText(Integer.toString((int)hp));
+        }
+        if (hp < 0) {
+            hp = 0.f;
         }
     }
 
@@ -39,7 +56,7 @@ public class SimpleGhost extends Entity {
         return hp <= 0;
     }
 
-    public void strenghten(){
+    public void strengthen(){
         hp = 10;
     }
 }
